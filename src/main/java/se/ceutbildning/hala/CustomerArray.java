@@ -10,7 +10,15 @@ public class CustomerArray {
     }
 
     public void addCustomer(Customer customer) throws Exception {
-        cuArray(customer);
+        for( Customer c : customers)
+            if(customer.getEmail().equals(c.getEmail())) {
+                System.out.println("email already exist");
+            }
+            else {
+                int offset= customers.length;
+                customers = Arrays.copyOf(customers, customers.length + 1);
+                customers[offset] = customer;
+            }
 
     }
     public Customer findByEmail(String email){
@@ -21,23 +29,9 @@ public class CustomerArray {
         }return null;
     }
 
-
-    private void cuArray(Customer cus) {
-        for( Customer c : customers)
-        if(cus.getEmail().equals(c.getEmail())) {
-            System.out.println("email already exist");
-        }
-        else {
-            int offset= customers.length;
-            customers = Arrays.copyOf(customers, customers.length + 1);
-            customers[offset] = cus;
-        }
-
-    }
-
     public Customer findCustomer(String id){
         for (Customer c: customers){
-            if(id == c.getId()){
+            if(c.getId().equals(id)){
                 return c;
             }
 
@@ -67,4 +61,6 @@ public class CustomerArray {
             System.out.println(customer);
         }
     }
+
+
 }
