@@ -3,31 +3,68 @@ package se.ceutbildning.hala;
 import java.util.Arrays;
 
 public class CustomerArray {
-    private  static Customer[] customers= new Customer[0];
-    int offset= customers.length;
+    private  Customer[] customers= new Customer[0];
 
+    public CustomerArray() {
+        customers = new Customer[0];
+    }
 
-    public void addCustomer(Customer cust) throws Exception {
-        Customer customer= new Customer("firstName", "lastName", "email@ec.com");
+    public void addCustomer(Customer customer) throws Exception {
         cuArray(customer);
-        Customer customer1= new Customer("hala","mohammed","hala@ec.com");
-        cuArray(customer1);
-        Customer customer2= new Customer("peter", "sundberg","peter@ec.com");
-       cuArray(customer2);
+
+    }
+    public Customer findByEmail(String email){
+        for (Customer customer: customers){
+            if(customer.getEmail().equals(email)){
+                return customer;
+            }
+        }return null;
+    }
+
+
+    private void cuArray(Customer cus) {
+        for( Customer c : customers)
+        if(cus.getEmail().equals(c.getEmail())) {
+            System.out.println("email already exist");
+        }
+        else {
+            int offset= customers.length;
+            customers = Arrays.copyOf(customers, customers.length + 1);
+            customers[offset] = cus;
+        }
 
     }
 
-    private void cuArray(Customer cus) {
+    public Customer findCustomer(String id){
+        for (Customer c: customers){
+            if(id == c.getId()){
+                return c;
+            }
 
-        customers = Arrays.copyOf(customers,customers.length+1);
-        customers[offset] = cus;
+        } return null;
+    }
+    public void removeCustomer(String id){
+        int position= findbyid(id);
+        for (int i=0; i<customers.length; i++){
+            if(position == i){
+                customers[i]= customers[i+1];
+            }
+        }
 
+    }
+
+    private int findbyid(String id) {
+        for(int i=0; i<customers.length; i++){
+            if(id.equals(customers[i]))
+                return i;
+        }
+        return -1;
     }
 
 
     public void printArray(){
-        for (Customer c : customers){
-            System.out.println(c);
+        for (Customer customer: customers){
+            System.out.println(customer);
         }
     }
 }
